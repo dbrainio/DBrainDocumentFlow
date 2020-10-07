@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'DBrainDocumentFlow_Example' do
+  pod 'DBrainDocumentFlow', :path => '../'
+
+  target 'DBrainDocumentFlow_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
