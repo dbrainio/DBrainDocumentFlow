@@ -1,0 +1,6 @@
+framework module DBrainDocumentFlow {
+  umbrella header "DBrainDocumentFlow-umbrella.h"
+
+  export *
+  module * { export * }
+}

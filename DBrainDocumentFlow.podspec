@@ -9,8 +9,8 @@
 Pod::Spec.new do |s|
   s.name             = 'DBrainDocumentFlow'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of DBrainDocumentFlow.'
-
+  s.summary          = 'Lib for scaning documents for Dbrain'
+  s.swift_version = '5.0'
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
 #   * Try to keep it short, snappy and to the point.
@@ -26,9 +26,9 @@ TODO: Add long description of the pod here.
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'DeadHipo' => '561298@gmail.com' }
   s.source           = { :git => 'https://github.com/DeadHipo/DBrainDocumentFlow.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.social_media_url = 'https://t.me/nearlydeadhipo'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'DBrainDocumentFlow/Classes/**/*'
   
@@ -37,6 +37,6 @@ TODO: Add long description of the pod here.
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
+  s.frameworks = 'UIKit', 'Foundation', 'AVFoundation', 'Accelerate'
   # s.dependency 'AFNetworking', '~> 2.3'
 end

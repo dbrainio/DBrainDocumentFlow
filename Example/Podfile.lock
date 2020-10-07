@@ -1,0 +1,16 @@
+PODS:
+  - DBrainDocumentFlow (0.1.0)
+
+DEPENDENCIES:
+  - DBrainDocumentFlow (from `../`)
+
+EXTERNAL SOURCES:
+  DBrainDocumentFlow:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  DBrainDocumentFlow: 91d0536f00d196161cc9d1f299a2024f6a0736f1
+
+PODFILE CHECKSUM: d363923aecc8f9025d065620e0e24c46c458fffe
+
+COCOAPODS: 1.9.3

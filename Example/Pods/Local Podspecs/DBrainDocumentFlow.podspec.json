@@ -1,0 +1,22 @@
+{
+  "name": "DBrainDocumentFlow",
+  "version": "0.1.0",
+  "summary": "A short description of DBrainDocumentFlow.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/DeadHipo/DBrainDocumentFlow",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "DeadHipo": "561298@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/DeadHipo/DBrainDocumentFlow.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "DBrainDocumentFlow/Classes/**/*"
+}
