@@ -47,6 +47,8 @@
 		CBB58547864509CA8191D062 /* DBrainDocumentFlow.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DBrainDocumentFlow.podspec; path = ../DBrainDocumentFlow.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E943D63E03C2A8BBF4FDA60C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		F1850228B14810F4BFB04AC3 /* Pods-DBrainDocumentFlow_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DBrainDocumentFlow_Tests.release.xcconfig"; path = "Target Support Files/Pods-DBrainDocumentFlow_Tests/Pods-DBrainDocumentFlow_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		F1B20D58252E56D900B1D2CD /* README_RU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README_RU.md; path = ../README_RU.md; sourceTree = "<group>"; };
+		F1B20D59252E5C4100B1D2CD /* luma_clipped.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = luma_clipped.png; path = ../luma_clipped.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,8 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
+				F1B20D59252E5C4100B1D2CD /* luma_clipped.png */,
+				F1B20D58252E56D900B1D2CD /* README_RU.md */,
 				CBB58547864509CA8191D062 /* DBrainDocumentFlow.podspec */,
 				6939F78D9F9D9142A609F6FF /* README.md */,
 				E943D63E03C2A8BBF4FDA60C /* LICENSE */,
