@@ -45,19 +45,19 @@ $ pod install
 
 ### Flow
 
-`DocumentFlow` -  Когда вы сделаете фото, вы сможете выбрать тип документа, прежде чем отправить его для распознавания;
-`PassportFlow` - унаследованный от DocumentFlow. По умолчанию распознает тип passport_main;
-`DriverLicenceFlow` - унаследованный от DocumentFlow. По умолчанию распознает тип driver_license_2011_front.
+- `DocumentFlow` -  Когда вы сделаете фото, вы сможете выбрать тип документа, прежде чем отправить его для распознавания;
+- `PassportFlow` - унаследованный от DocumentFlow. По умолчанию распознает тип passport_main;
+- `DriverLicenceFlow` - унаследованный от DocumentFlow. По умолчанию распознает тип driver_license_2011_front.
 
 ### Типы
 
 `DocumentType`  - Возможные типы документов указываются при создании `DocumentFlow`
 
-`.empty` - Не указывает doc_type при отправке на распознание
-`custom(type: String)` - Указывает кастомный doc_type при отправке
-`driverLicence` - Не указывает doc_type при отправке на распознание
-`passport` - Указывает passport_main doc_type при отправке
-`selectable` - После фотографии будет предложен выбор если слассификация прошла успешно
+- `.empty` - Не указывает doc_type при отправке на распознание
+- `custom(type: String)` - Указывает кастомный doc_type при отправке
+- `driverLicence` - Не указывает doc_type при отправке на распознание
+- `passport` - Указывает passport_main doc_type при отправке
+- `selectable` - После фотографии будет предложен выбор если слассификация прошла успешно
 
 ### Методы
 

@@ -45,19 +45,19 @@ $ pod install
 
 ### Flow
 
-`DocumentFlow` - Base flow. When take photo you can choose type of document, before send to recognize;
-`PassportFlow` - inherited flow from DocumentFlow. By default recognize passport_main type;
-`DriverLicenceFlow` - inherited flow from DocumentFlow. By default recognize driver_license_2011_front type.
+- `DocumentFlow` - Base flow. When take photo you can choose type of document, before send to recognize;
+- `PassportFlow` - inherited flow from DocumentFlow. By default recognize passport_main type;
+- `DriverLicenceFlow` - inherited flow from DocumentFlow. By default recognize driver_license_2011_front type.
 
 ### Types
 
 `DocumentType` - Possible document types are specified when creating` DocumentFlow`
 
-`.empty` - Does not specify doc_type when sending for recognition
-`custom (type: String)` - Specifies a custom doc_type when submitting
-`driverLicence` - Does not specify doc_type when sending for recognition
-`passport` - Specifies passport_main doc_type when sending
-`selectable` - After the photo, a choice will be offered if the classification was successful
+- `.empty` - Does not specify doc_type when sending for recognition
+- `custom (type: String)` - Specifies a custom doc_type when submitting
+- `driverLicence` - Does not specify doc_type when sending for recognition
+- `passport` - Specifies passport_main doc_type when sending
+- `selectable` - After the photo, a choice will be offered if the classification was successful
 
 ### Methods
 
