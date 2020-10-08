@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DBrainDocumentFlow'
-  s.version          = '1.0.4'
+  s.version          = '1.0.5'
   s.summary          = 'Lib for scaning documents for Dbrain'
   s.swift_version = '5.0'
 # This description is used to generate tags and improve search results.

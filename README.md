@@ -31,7 +31,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'DBrainDocumentFlow', '~> 5.0.0'
+    pod 'DBrainDocumentFlow'
 end
 ```
 
