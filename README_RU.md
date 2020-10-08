@@ -49,16 +49,43 @@ $ pod install
 `PassportFlow` - унаследованный от DocumentFlow. По умолчанию распознает тип passport_main;
 `DriverLicenceFlow` - унаследованный от DocumentFlow. По умолчанию распознает тип driver_license_2011_front.
 
+### Типы
+
+`DocumentType`  - Возможные типы документов указываются при создании `DocumentFlow`
+
+`.empty` - Не указывает doc_type при отправке на распознание
+`custom(type: String)` - Указывает кастомный doc_type при отправке
+`driverLicence` - Не указывает doc_type при отправке на распознание
+`passport` - Указывает passport_main doc_type при отправке
+`selectable` - После фотографии будет предложен выбор если слассификация прошла успешно
+
 ### Методы
 
-- Хендлер завершения (вызов при успешной загрузке фото), по умолчанию `nil`
+- Хендлер завершения, используется для закрытия окна и получения данных после распознания (вызов при успешной загрузке фото), по умолчанию `nil`
 #### Swift
 ```swift
-let onEndFlow: () -> Void = { [weak self] in
+let onEndFlow: ([RecognitionItem]) -> Void = { [weak self] data in
+    print(data)
     self?.dismiss(animated: true)
 }
 
 flow.with(onEndFlow: onEndFlow)
+```
+
+- `RecognitionItem`
+Обект поля полученного в результата распознания
+
+#### Swift
+```swift
+struct RecognitionItem: Decodable {
+    var docType: String // Тип документа
+    var fields: [String: RecognitionField] // Поля документа
+}
+
+struct RecognitionField: Decodable {
+    var text: String // Значение поля
+    var confidence: Double // Точность
+}
 ```
 
 - Максимальный размер фотографии в килобайтах, по умолчанию `400`
@@ -86,13 +113,19 @@ flow.with(trackingRect: zoneRect)
 ```swift
 let lumaDiffCoefficient: CGFloat = 0.35
 
-faceFlow.with(lumaDiffCoefficient: lumaDiffCoefficient)
+flow.with(lumaDiffCoefficient: lumaDiffCoefficient)
 ```
 
-- Dотображение гистограммы и максимального уровня освещенности, по умолчанию `отключено`
+- Отображение гистограммы и максимального уровня освещенности, по умолчанию `отключено`
 #### Swift
 ```swift
-faceFlow.withDebugViews()
+flow.withDebugViews()
+```
+
+- Отображение результата при успешном распознании, по умолчанию `отключено`
+#### Swift
+```swift
+flow.withResult()
 ```
 
 - Хендлер результата, полученного в результате анализа, позволяет вам возвращать строки для отображения заголовков, по умолчанию `nil` (Также, если вы вернете` nil`, информация отображаться не будет)
@@ -192,11 +225,11 @@ present(viewController, animated: true)
 ```
 
 ## Засвет
-При создании `FaceFlow` или `DocumentFlow` можно указать `lumaDiffCoefficient` от `0` до `1`, если значение будет больше `1`, то будет принято `1`, т.е. все будет приниматься и засвет не будет учитываться.
+При создании `DocumentFlow`, `DriverLicenceFlow`  или `PassportFlow` можно указать `lumaDiffCoefficient` от `0` до `1`, если значение будет больше `1`, то будет принято `1`, т.е. все будет приниматься и засвет не будет учитываться.
 Этот коэффициент устанавливает максимальную высоту правого края гистограммы 
 `Max = maxValue * lumaDiffCoefficient`
 
-![Luma](/luma_clipped.png)
+![Luma](https://github.com/DeadHipo/DBrainDocumentFlow/blob/main/luma_clipped.png)
 
 [Коэффициенты для расчета засвета из гистограммы RGB](https://developer.apple.com/documentation/accelerate/vimage/converting_color_images_to_grayscale)
 или

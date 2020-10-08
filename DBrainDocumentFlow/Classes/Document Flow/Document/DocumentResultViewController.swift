@@ -16,7 +16,7 @@ class DocumentResultViewController: UIViewController {
     
     var respone: RecognitionResponse!
     
-    var onEndFlow: (() -> Void)?
+    var onEndFlow: (([RecognitionItem]) -> Void)?
     var onReciveResult: ((_ key: String) -> String?)?
     
     // MARK: - Lifecycle
@@ -67,7 +67,7 @@ class DocumentResultViewController: UIViewController {
     // MARK: - Handler
     
     @objc private func retakeButtonClicked(_ sender: UIButton) {
-        onEndFlow?()
+        onEndFlow?(respone.items)
     }
     
 }

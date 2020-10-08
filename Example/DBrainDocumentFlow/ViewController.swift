@@ -47,7 +47,8 @@ class ViewController: UIViewController {
             return
         }
         
-        let onEndFlow: () -> Void = { [weak self] in
+        let onEndFlow: ([RecognitionItem]) -> Void = { [weak self] data in
+            print(data)
             self?.dismiss(animated: true)
         }
 
@@ -67,7 +68,7 @@ class ViewController: UIViewController {
         let size = CGSize(width: side, height: side)
         let origin = CGPoint(x: 50.0, y: 88.0)
         
-        let flow = DocumentFlow.configure(authorizationToken: token)
+        let flow = DocumentFlow.configure(type: .selectable, authorizationToken: token)
             .with(onEndFlow: onEndFlow)
             .with(onReciveResult: onReciveResult)
             .with(onReciveDocumentType: onReciveDocumentType)
@@ -75,6 +76,7 @@ class ViewController: UIViewController {
             .with(expectedSizeKb: 1000)
             .with(trackingRect: CGRect(origin: origin, size: size))
             .withDebugViews()
+            .withResult()
             .build()
 
         let viewController = flow.start()
@@ -92,7 +94,8 @@ class ViewController: UIViewController {
             return
         }
         
-        let onEndFlow: () -> Void = { [weak self] in
+        let onEndFlow: ([RecognitionItem]) -> Void = { [weak self] data in
+            print(data)
             self?.dismiss(animated: true)
         }
         
@@ -114,7 +117,8 @@ class ViewController: UIViewController {
             return
         }
         
-        let onEndFlow: () -> Void = { [weak self] in
+        let onEndFlow: ([RecognitionItem]) -> Void = { [weak self] data in
+            print(data)
             self?.dismiss(animated: true)
         }
         

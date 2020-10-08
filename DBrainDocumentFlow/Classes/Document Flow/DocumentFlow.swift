@@ -15,8 +15,10 @@ public class DocumentFlow {
     public static let classificationUrl = URL(string: "https://latest.dbrain.io/classify?mode=default&quality=75&dpi=300&pdf_raw_images=true")!
     
     public enum DocumentType {
+        case empty
+        case custom(type: String)
         case driverLicence
-        case pasport
+        case passport
         case selectable
     }
     
@@ -32,8 +34,9 @@ public class DocumentFlow {
     let recognitionUrl: URL
     let fileKey: String
     var expectedSizeKb: Int = 400
+    var displayResult: Bool = false
     
-    var onEndFlow: (() -> Void)?
+    var onEndFlow: (([RecognitionItem]) -> Void)?
     var onReciveResult: ((_ key: String) -> String?)?
     var onReciveDocumentType: ((_ type: String) -> (title: String, isEnabled: Bool))?
 
@@ -56,13 +59,13 @@ public class DocumentFlow {
         return CGRect(origin: origin, size: size)
     }
     
-    public static func configure(type: DocumentType = .selectable, authorizationToken: String, classificationUrl: URL = DocumentFlow.classificationUrl, recognitionUrl: URL = DocumentFlow.recognitionUrl, fileKey: String = "image") -> DocumentFlow {
-        let faceFlow = DocumentFlow(type: type, authorizationToken: authorizationToken, classificationUrl: classificationUrl, recognitionUrl: recognitionUrl, fileKey: fileKey)
+    public static func configure(type: DocumentType, authorizationToken: String, classificationUrl: URL = DocumentFlow.classificationUrl, recognitionUrl: URL = DocumentFlow.recognitionUrl, fileKey: String = "image") -> DocumentFlow {
+        let flow = DocumentFlow(type: type, authorizationToken: authorizationToken, classificationUrl: classificationUrl, recognitionUrl: recognitionUrl, fileKey: fileKey)
         
-        return faceFlow
+        return flow
     }
     
-    public func with(onEndFlow handler: @escaping () -> Void) -> DocumentFlow {
+    public func with(onEndFlow handler: @escaping ([RecognitionItem]) -> Void) -> DocumentFlow {
         onEndFlow = handler
         
         return self
@@ -104,6 +107,12 @@ public class DocumentFlow {
         return self
     }
     
+    public func withResult() -> DocumentFlow {
+        displayResult = true
+        
+        return self
+    }
+    
     public func build() -> DocumentFlow {
         let documentViewController = DocumentViewController()
         documentViewController.type = type
@@ -118,6 +127,7 @@ public class DocumentFlow {
         documentViewController.expectedSizeKb = expectedSizeKb
         documentViewController.onReciveResult = onReciveResult
         documentViewController.onReciveDocumentType = onReciveDocumentType
+        documentViewController.displayResult = displayResult
         
         viewController = documentViewController
         

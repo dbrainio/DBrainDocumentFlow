@@ -49,16 +49,43 @@ $ pod install
 `PassportFlow` - inherited flow from DocumentFlow. By default recognize passport_main type;
 `DriverLicenceFlow` - inherited flow from DocumentFlow. By default recognize driver_license_2011_front type.
 
+### Types
+
+`DocumentType` - Possible document types are specified when creating` DocumentFlow`
+
+`.empty` - Does not specify doc_type when sending for recognition
+`custom (type: String)` - Specifies a custom doc_type when submitting
+`driverLicence` - Does not specify doc_type when sending for recognition
+`passport` - Specifies passport_main doc_type when sending
+`selectable` - After the photo, a choice will be offered if the classification was successful
+
 ### Methods
 
-- Handler end flow (call when photo upload success), default `nil`
+- Handler end flow, used to close the window and get data after recognition (call when photo upload success), default `nil`
 #### Swift
 ```swift
-let onEndFlow: () -> Void = { [weak self] in
+let onEndFlow: ([RecognitionItem]) -> Void = { [weak self] data in
+    print(data)
     self?.dismiss(animated: true)
 }
 
 flow.with(onEndFlow: onEndFlow)
+```
+
+- `RecognitionItem`
+The object of the field obtained in the recognition result
+
+#### Swift
+```swift
+struct RecognitionItem: Decodable {
+     var docType: String // Document type
+     var fields: [String: RecognitionField] // Document fields
+}
+
+struct RecognitionField: Decodable {
+     var text: String // Field value
+     var confidence: Double // Accuracy
+}
 ```
 
 - Maximum photo size in kilobytes, default `400`
@@ -86,13 +113,19 @@ flow.with(trackingRect: zoneRect)
 ```swift
 let lumaDiffCoefficient: CGFloat = 0.35
 
-faceFlow.with(lumaDiffCoefficient: lumaDiffCoefficient)
+flow.with(lumaDiffCoefficient: lumaDiffCoefficient)
 ```
 
 - Display of histogram and maximum illumination level, `disabled` by default
 #### Swift
 ```swift
-faceFlow.withDebugViews()
+flow.withDebugViews()
+```
+
+- Displaying the result upon successful recognition, `disabled` by default
+#### Swift
+```swift
+flow.withResult()
 ```
 
 - The headler of the result obtained as a result of the analysis, allows you to return strings for display, by default `nil` (Also, if you return` nil`, the information will not be displayed)
@@ -192,11 +225,11 @@ present(viewController, animated: true)
 ```
 
 ## Flare
-When creating `FaceFlow` or` DocumentFlow`, you can specify `lumaDiffCoefficient` from` 0` to `1`, if the value is greater than` 1`, then `1` will be accepted, i.e. everything will be accepted and light will not be counted.
+When creating `DocumentFlow`, `DriverLicenceFlow`  or `PassportFlow` , you can specify `lumaDiffCoefficient` from` 0` to `1`, if the value is greater than` 1`, then `1` will be accepted, i.e. everything will be accepted and light will not be counted.
 This factor sets the maximum height of the right edge of the histogram
 `Max = maxValue * lumaDiffCoefficient`
 
-![Luma](/luma_clipped.png)
+![Luma](https://github.com/DeadHipo/DBrainDocumentFlow/blob/main/luma_clipped.png)
 
 [Coefficients for calculating bleed from RGB histogram](https://developer.apple.com/documentation/accelerate/vimage/converting_color_images_to_grayscale)
 or

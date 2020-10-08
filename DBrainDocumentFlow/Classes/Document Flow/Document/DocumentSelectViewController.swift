@@ -12,9 +12,10 @@ class DocumentSelectViewController: UIViewController {
     
     var values: [ClassificationItem]!
     var loader: DocumentLoader!
+    var displayResult: Bool!
     
     var backHandler: (() -> ())?
-    var onEndFlow: (() -> Void)?
+    var onEndFlow: (([RecognitionItem]) -> Void)?
     var onReciveResult: ((_ key: String) -> String?)?
     
     private var selectedIndex: Int = 0
@@ -148,7 +149,11 @@ class DocumentSelectViewController: UIViewController {
         loader.recognition(image: image, type: value.document.type) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.routeToResult(response: response)
+                if self?.displayResult == true {
+                    self?.routeToResult(response: response)
+                } else {
+                    self?.onEndFlow?(response.items)
+                }
             case .failure(let error):
                 print(error)
             }

@@ -42,12 +42,12 @@ struct RecognitionResponse: Decodable {
     var errno: Int?
 }
 
-struct RecognitionItem: Decodable {
+public struct RecognitionItem: Decodable {
     var docType: String
     var fields: [String: RecognitionField]
 }
 
-struct RecognitionField: Decodable {
+public struct RecognitionField: Decodable {
     var text: String
     var confidence: Double
 }
@@ -72,7 +72,7 @@ class DocumentLoader: NSObject {
         super.init()
     }
     
-    func recognition(image: UIImage, type: String, completion: @escaping (Result<RecognitionResponse, Error>) -> Void) {
+    func recognition(image: UIImage, type: String?, completion: @escaping (Result<RecognitionResponse, Error>) -> Void) {
         queue.async {
             guard let imageData = image.compressTo(expectedSizeKb: self.expectedSizeKb) else {
                 return
@@ -83,7 +83,9 @@ class DocumentLoader: NSObject {
             }
             
             var queryItems = components.queryItems ?? []
-            queryItems.append(URLQueryItem(name: "doc_type", value: type))
+            if let type = type {
+                queryItems.append(URLQueryItem(name: "doc_type", value: type))
+            }
             components.queryItems = queryItems
             
             guard let url = components.url else {

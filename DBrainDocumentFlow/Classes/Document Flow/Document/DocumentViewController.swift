@@ -11,7 +11,7 @@ import AVFoundation
 
 class DocumentViewController: UIViewController {
     
-    var type: DocumentFlow.DocumentType!
+    var type: DocumentFlow.DocumentType = .empty
     
     var trackingRect: CGRect!
     var shouldShowDebugElements: Bool = false
@@ -22,8 +22,9 @@ class DocumentViewController: UIViewController {
     var recognitionUrl: URL!
     var fileKey: String!
     var expectedSizeKb: Int!
+    var displayResult: Bool!
     
-    var onEndFlow: (() -> Void)?
+    var onEndFlow: (([RecognitionItem]) -> Void)?
     var onReciveResult: ((_ key: String) -> String?)?
     var onReciveDocumentType: ((_ type: String) -> (title: String, isEnabled: Bool))?
     
@@ -107,6 +108,54 @@ class DocumentViewController: UIViewController {
     
     // MARK: - Content
     
+    private func routeResult(image: UIImage) {
+        let loader = DocumentLoader(classificationUrl: classificationUrl, recognitionUrl: recognitionUrl, authorizationToken: authorizationToken, fileKey: fileKey, expectedSizeKb: expectedSizeKb)
+        
+        cameraService.stop()
+        
+        var recognitionType: String?
+        
+        switch type {
+        case .passport:
+            recognitionType = "passport_main"
+        case .custom(let t):
+            recognitionType = t
+        case .empty:
+            recognitionType = nil
+        case .driverLicence:
+            recognitionType = nil
+        case .selectable:
+            recognitionType = nil
+        }
+        
+        loader.recognition(image: image, type: recognitionType) { [weak self] result in
+            switch result {
+            case .success(let response):
+                if self?.displayResult == true {
+                    self?.routeToPasportSuccess(response: response)
+                } else {
+                    self?.onEndFlow?(response.items)
+                }
+            case .failure(let error):
+                let title: String
+                
+                if let error = error as? DocumentLoaderError {
+                    switch error {
+                    case .invalidParse:
+                        title = "Data processing error"
+                    case .serverError:
+                        title = "Server error"
+                    }
+                } else {
+                    title = error.localizedDescription
+                }
+                
+                self?.routeToFailure(title: title)
+            }
+        }
+        
+    }
+    /*
     private func routeToPasportResult(image: UIImage) {
         let loader = DocumentLoader(classificationUrl: classificationUrl, recognitionUrl: recognitionUrl, authorizationToken: authorizationToken, fileKey: fileKey, expectedSizeKb: expectedSizeKb)
         
@@ -141,7 +190,7 @@ class DocumentViewController: UIViewController {
         
         cameraService.stop()
         
-        loader.recognition(image: image, type: "driver_license_2011_front") { [weak self] result in
+        loader.recognition(image: image, type: nil) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.routeToPasportSuccess(response: response)
@@ -164,13 +213,10 @@ class DocumentViewController: UIViewController {
         }
         
     }
+     */
     
     private func routeToSelectableResult(image: UIImage) {
-        let loader = DocumentLoader(classificationUrl: classificationUrl,
-                                    recognitionUrl: recognitionUrl,
-                                    authorizationToken: authorizationToken,
-                                    fileKey: fileKey,
-                                    expectedSizeKb: expectedSizeKb)
+        let loader = DocumentLoader(classificationUrl: classificationUrl, recognitionUrl: recognitionUrl, authorizationToken: authorizationToken, fileKey: fileKey, expectedSizeKb: expectedSizeKb)
         
         cameraService.stop()
         
@@ -214,8 +260,9 @@ class DocumentViewController: UIViewController {
         let viewController: DocumentSelectViewController = DocumentSelectViewController()
         viewController.onEndFlow = self.onEndFlow
         viewController.onReciveResult = self.onReciveResult
+        viewController.displayResult = self.displayResult
         viewController.loader = loader
-        
+                
         var res = response
         
         for (index, i) in res.items.enumerated() {
@@ -324,18 +371,26 @@ extension DocumentViewController: CameraServiceDelegate {
     }
     
     func cameraService(_ cameraService: CameraService, didTake image: UIImage) {
-        guard let type = type else {
-            return
-        }
-        
         switch type {
-        case .driverLicence:
-            routeToDriverLicense(image: image)
         case .selectable:
             routeToSelectableResult(image: image)
-        case .pasport:
-            routeToPasportResult(image: image)
+        default:
+            routeResult(image: image)
         }
+        
+        
+//        guard let type = type else {
+//            return
+//        }
+//
+//        switch type {
+//        case .driverLicence:
+//            routeToDriverLicense(image: image)
+//        case .selectable:
+//            routeToSelectableResult(image: image)
+//        case .pasport:
+//            routeToPasportResult(image: image)
+//        }
     
     }
     

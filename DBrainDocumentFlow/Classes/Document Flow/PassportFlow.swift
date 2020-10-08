@@ -36,7 +36,7 @@ public class PassportFlow: DocumentFlow {
     }
     
     public static func configure(authorizationToken: String, classificationUrl: URL = DocumentFlow.classificationUrl, recognitionUrl: URL = DocumentFlow.recognitionUrl, fileKey: String = "image") -> PassportFlow {
-        return PassportFlow(type: .pasport, authorizationToken: authorizationToken, classificationUrl: classificationUrl, recognitionUrl: recognitionUrl, fileKey: fileKey)
+        return PassportFlow(type: .passport, authorizationToken: authorizationToken, classificationUrl: classificationUrl, recognitionUrl: recognitionUrl, fileKey: fileKey)
     }
     
     override func defaultTrackingRect() -> CGRect {
