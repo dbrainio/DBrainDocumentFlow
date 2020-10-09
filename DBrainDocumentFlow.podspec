@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DBrainDocumentFlow'
-  s.version          = '1.0.6'
+  s.version          = '1.0.7'
   s.summary          = 'Lib for scaning documents for Dbrain'
   s.swift_version    = '5.0'
 # This description is used to generate tags and improve search results.
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/DeadHipo/DBrainDocumentFlow'
+  s.homepage         = 'https://github.com/dbrainio/DBrainDocumentFlow'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'DeadHipo' => '561298@gmail.com' }
